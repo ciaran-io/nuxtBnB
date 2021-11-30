@@ -1,9 +1,3 @@
-<template>
-  <div class="grid grid-flow-col gap-1">
-    <HomeCard v-for="home in homes" :key="home.objectID" :home="home" />
-  </div>
-</template>
-
 <script>
 import homes from '~/data/homes'
 
@@ -24,3 +18,15 @@ export default {
   }),
 }
 </script>
+
+<template>
+  <div class="grid grid-flow-col gap-1">
+    <NuxtLink
+      v-for="home in homes"
+      :key="home.objectID"
+      :to="`/home/${home.objectID}`"
+    >
+      <HomeCard :home="home" />
+    </NuxtLink>
+  </div>
+</template>
