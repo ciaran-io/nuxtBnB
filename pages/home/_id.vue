@@ -2,22 +2,52 @@
 import homes from '~/data/homes'
 
 export default {
-  head: () => ({
-    title: 'Homepage',
-    meta: [
-      {
-        name: 'decription',
-        content: 'This is a homepage',
-        hid: 'decription',
-      },
-    ],
-  }),
-
   data: () => ({
     home: {},
   }),
+
+  head() {
+    return {
+      title: this.home.title,
+      script: [
+        {
+          src: 'https:maps.googleapis.com/maps/api/js?key=AIzaSyCFIDdK19LZC_2PsiWOpEtgWdxx4Lhawoo&libraries=places&callback=initMap',
+          hid: 'map',
+          defer: true,
+          skip: process.client && window.mapLoaded,
+        },
+      ],
+      meta: [
+        {
+          name: 'description',
+          content: `This is a new home ${this.home.title}`,
+          hid: 'description',
+        },
+      ],
+    }
+  },
+
+  mounted() {
+    const mapOptions = {
+      zoom: 18,
+      disableDefaultUI: true,
+      zoomcontrol: true,
+      center: new window.google.maps.LatLng(
+        this.home._geoloc.lat,
+        this.home._geoloc.lng
+      ),
+    }
+    const map = new window.google.maps.Map(this.$refs.map, mapOptions)
+    const position = new window.google.maps.LatLng(
+      this.home._geoloc.lat,
+      this.home._geoloc.lng
+    )
+    const marker = new window.google.maps.Marker({ position })
+    marker.setMap(map)
+  },
+
   created() {
-    const home = homes.find((home) => home.objectID == this.$route.params.id)
+    const home = homes.find((home) => home.objectID === this.$route.params.id)
     this.home = home
   },
 }
@@ -80,5 +110,8 @@ export default {
         </div>
       </ul>
     </div>
+
+    <!-- google maps -->
+    <div ref="map" class="w-[800px] h-[800px]"></div>
   </div>
 </template>
