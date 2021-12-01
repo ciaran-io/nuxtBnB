@@ -2,19 +2,18 @@
 import homes from '~/data/homes'
 
 export default {
+  data: () => ({
+    homes: homes.slice(0, 3),
+  }),
   head: () => ({
     title: 'Homepage',
     meta: [
       {
-        name: 'decription',
+        name: 'description',
         content: 'This is a homepage',
-        hid: 'decription',
+        hid: 'description',
       },
     ],
-  }),
-
-  data: () => ({
-    homes: homes.slice(0, 3),
   }),
 }
 </script>
