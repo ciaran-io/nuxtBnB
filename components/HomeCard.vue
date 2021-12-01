@@ -12,7 +12,7 @@ export default {
 <template>
   <div>
     <img
-      :src="home.images[0]"
+      :src="home.images"
       style="object-fit: fill"
       width="200"
       height="200"
