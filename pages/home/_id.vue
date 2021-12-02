@@ -21,9 +21,15 @@ export default {
     )
   },
 
-  async asyncData({ params, $dataApi }) {
-    const home = await $dataApi.getHome(params.id)
-    return { home }
+  // call data api useing dataApi plugin
+  async asyncData({ params, $dataApi, error }) {
+    const repsonse = await $dataApi.getHome(params.id)
+    if (!repsonse.ok)
+      return error({
+        statuscode: response.status,
+        messsage: response.statusText,
+      })
+    return { home: repsonse.home }
   },
 }
 </script>
