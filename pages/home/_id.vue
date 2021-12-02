@@ -9,14 +9,6 @@ export default {
   head() {
     return {
       title: this.home.title,
-      script: [
-        {
-          src: 'https:maps.googleapis.com/maps/api/js?key=AIzaSyCFIDdK19LZC_2PsiWOpEtgWdxx4Lhawoo&libraries=places&callback=initMap',
-          hid: 'map',
-          defer: true,
-          skip: process.client && window.mapLoaded,
-        },
-      ],
       meta: [
         {
           name: 'description',
@@ -28,22 +20,11 @@ export default {
   },
 
   mounted() {
-    const mapOptions = {
-      zoom: 18,
-      disableDefaultUI: true,
-      zoomcontrol: true,
-      center: new window.google.maps.LatLng(
-        this.home._geoloc.lat,
-        this.home._geoloc.lng
-      ),
-    }
-    const map = new window.google.maps.Map(this.$refs.map, mapOptions)
-    const position = new window.google.maps.LatLng(
+    this.$maps.showMap(
+      this.$refs.map,
       this.home._geoloc.lat,
       this.home._geoloc.lng
     )
-    const marker = new window.google.maps.Marker({ position })
-    marker.setMap(map)
   },
 
   created() {
