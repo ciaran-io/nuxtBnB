@@ -23,13 +23,13 @@ export default {
 
   // call data api useing dataApi plugin
   async asyncData({ params, $dataApi, error }) {
-    const repsonse = await $dataApi.getHome(params.id)
-    if (!repsonse.ok)
+    const response = await $dataApi.getHome(params.id)
+    if (!response.ok)
       return error({
-        statuscode: response.status,
+        statusCode: response.status,
         messsage: response.statusText,
       })
-    return { home: repsonse.home }
+    return { home: response.json }
   },
 }
 </script>
