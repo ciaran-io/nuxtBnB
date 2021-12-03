@@ -1,4 +1,4 @@
-export default (context, inject) => {
+export default function (context, inject) {
   const appId = '20TT3H3J0T'
   const apiKey = 'a2ab745a479ac514dd5769f72997579d'
   const headers = {
@@ -19,13 +19,13 @@ export default (context, inject) => {
         )
       )
     } catch (error) {
-      return getErrorRepsonse(error)
+      return getErrorResponse(error)
     }
   }
 
-  async function unwrap(repsonse) {
-    const json = await repsonse.json()
-    const { ok, status, statusText } = repsonse
+  async function unWrap(response) {
+    const json = await response.json()
+    const { ok, status, statusText } = response
     return {
       json,
       ok,
@@ -34,7 +34,7 @@ export default (context, inject) => {
     }
   }
 
-  function getErrorRepsonse(error) {
+  function getErrorResponse(error) {
     return {
       ok: !true,
       status: 500,
