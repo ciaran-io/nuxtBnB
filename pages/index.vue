@@ -2,9 +2,11 @@
 import homes from '~/data/homes'
 
 export default {
+  name: 'HomePageBase',
   data: () => ({
     homes: homes.slice(0, 3),
   }),
+
   head: () => ({
     title: 'Homepage',
     meta: [
