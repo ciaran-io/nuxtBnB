@@ -1,5 +1,36 @@
 <script>
 export default {
+  name: 'DynamicHomePage',
+  // call algolia api useing dataApi plugin
+  async asyncData({ params, $dataApi, error }) {
+    const homeResponse = await $dataApi.getHome(params.id)
+    if (!homeResponse.ok)
+      return error({
+        statusCode: homeResponse.status,
+        messsage: homeResponse.statusText,
+      })
+
+    const reviewResponse = await $dataApi.getReviewsByHomeId(params.id)
+    if (!reviewResponse.ok)
+      return error({
+        statusCode: reviewResponse.status,
+        messsage: reviewResponse.statusText,
+      })
+
+    const userResponse = await $dataApi.getUserByHomeId(params.id)
+    if (!userResponse.ok)
+      return error({
+        statusCode: userResponse.status,
+        messsage: userResponse.statusText,
+      })
+
+    return {
+      home: homeResponse.json,
+      reviews: reviewResponse.json.hits,
+      user: userResponse.json.hits[0],
+    }
+  },
+
   head() {
     return {
       title: this.home.title,
@@ -13,23 +44,23 @@ export default {
     }
   },
 
-  mounted() {
-    this.$maps.showMap(
-      this.$refs.map,
-      this.home._geoloc.lat,
-      this.home._geoloc.lng
-    )
-  },
-
-  // call data api useing dataApi plugin
-  async asyncData({ params, $dataApi, error }) {
-    const response = await $dataApi.getHome(params.id)
-    if (!response.ok)
-      return error({
-        statusCode: response.status,
-        messsage: response.statusText,
+  // mounted() {
+  //   // call google maps api from maps plugin
+  //   this.$maps.showMap(
+  //     this.$refs.map,
+  //     this.home._geoloc.lat,
+  //     this.home._geoloc.lng
+  //   )
+  // },
+  methods: {
+    // format date received from api
+    formatDate(dateStr) {
+      const date = new Date(dateStr)
+      return date.toLocaleDateString(undefined, {
+        month: 'long',
+        year: 'numeric',
       })
-    return { home: response.json }
+    },
   },
 }
 </script>
@@ -93,6 +124,23 @@ export default {
     </div>
 
     <!-- google maps -->
-    <div ref="map" class="w-[800px] h-[800px]"></div>
+    <div ref="map" class="w-[300px] h-[300px]"></div>
+
+    <!-- home reviews -->
+    <div v-for="review in reviews" :key="review.objectID" class="">
+      <img :src="review.reviewer.image" alt="reviewer profile image" />
+      <p>{{ review.reviewer.name }}</p>
+      <p>{{ formatDate(review.date) }}</p>
+      <p><shorten-text :text="review.comment" :target="120" /></p>
+    </div>
+
+    <div>
+      <!-- user reviews -->
+      <img :src="user.image" alt="" />
+      <p>{{ user.name }}</p>
+      <p>{{ formatDate(user.joined) }}</p>
+      <p>{{ user.reviewCount }}</p>
+      <p>{{ user.description }}</p>
+    </div>
   </div>
 </template>
