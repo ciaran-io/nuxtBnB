@@ -21,14 +21,16 @@ export default {
   plugins: ['~/plugins/maps.client', '~/plugins/dataApi'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: {
+    dirs: ['~/components', '~/components/buttons'],
+  },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     '@nuxtjs/tailwindcss',
-    'nuxt-vite',
+    // 'nuxt-vite',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -37,12 +39,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {
-      postcssOptions: {
-        plugins: {
-          'tailwindcss/nesting': {},
-          tailwindcss: {},
-          autoprefixer: {},
-        },
+      plugins: {
+        'tailwindcss/nesting': {},
+        tailwindcss: {},
+        autoprefixer: {},
       },
     },
   },
