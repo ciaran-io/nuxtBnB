@@ -3,31 +3,23 @@ export default {
   name: 'DynamicHomePage',
   // call algolia api useing dataApi plugin
   async asyncData({ params, $dataApi, error }) {
-    const homeResponse = await $dataApi.getHome(params.id)
-    if (!homeResponse.ok)
-      return error({
-        statusCode: homeResponse.status,
-        messsage: homeResponse.statusText,
-      })
+    const responses = await Promise.all([
+      $dataApi.getHome(params.id),
+      $dataApi.getReviewsByHomeId(params.id),
+      $dataApi.getUserByHomeId(params.id),
+    ])
 
-    const reviewResponse = await $dataApi.getReviewsByHomeId(params.id)
-    if (!reviewResponse.ok)
+    const badResponse = responses.find((response) => !response.ok)
+    if (badResponse)
       return error({
-        statusCode: reviewResponse.status,
-        messsage: reviewResponse.statusText,
-      })
-
-    const userResponse = await $dataApi.getUserByHomeId(params.id)
-    if (!userResponse.ok)
-      return error({
-        statusCode: userResponse.status,
-        messsage: userResponse.statusText,
+        statusCode: badResponse.status,
+        message: badResponse.statusText,
       })
 
     return {
-      home: homeResponse.json,
-      reviews: reviewResponse.json.hits,
-      user: userResponse.json.hits[0],
+      home: responses[0].json,
+      reviews: responses[1].json.hits,
+      user: responses[2].json.hits[0],
     }
   },
 
@@ -44,14 +36,14 @@ export default {
     }
   },
 
-  // mounted() {
-  //   // call google maps api from maps plugin
-  //   this.$maps.showMap(
-  //     this.$refs.map,
-  //     this.home._geoloc.lat,
-  //     this.home._geoloc.lng
-  //   )
-  // },
+  mounted() {
+    // call google maps api from maps plugin
+    this.$maps.showMap(
+      this.$refs.map,
+      this.home._geoloc.lat,
+      this.home._geoloc.lng
+    )
+  },
   methods: {
     // format date received from api
     formatDate(dateStr) {
