@@ -1,6 +1,6 @@
 export default function (context, inject) {
-  let mapLoaded = !true
-  let mapWaiting = null
+  let isLoaded = !true
+  let waiting = []
   addScript()
 
   inject('maps', {
@@ -10,29 +10,31 @@ export default function (context, inject) {
   function addScript() {
     const script = document.createElement('script')
     script.src =
-      'https:maps.googleapis.com/maps/api/js?key=AIzaSyCFIDdK19LZC_2PsiWOpEtgWdxx4Lhawoo&libraries=places&callback=initMap'
+      'https:maps.googleapis.com/maps/api/js?key=AIzaSyCFIDdK19LZC_2PsiWOpEtgWdxx4Lhawoo&libraries=places&callback=initGoogleMaps'
     script.async = true
-    window.initMap = initMap
+    window.initGoogleMaps = initGoogleMaps
     document.head.appendChild(script)
   }
 
-  function initMap() {
-    mapLoaded = true
-
-    if (mapWaiting) {
-      const { canvas, lat, lng } = mapWaiting
-      renderMap(canvas, lat, lng)
-      mapWaiting = null
-    }
+  function initGoogleMaps() {
+    isLoaded = true
+    waiting.forEach((item) => {
+      if (typeof item.fn === 'function') {
+        item.fn(...item.arguments)
+      }
+    })
+    waiting = []
   }
 
   function showMap(canvas, lat, lng) {
-    mapLoaded
-      ? renderMap(canvas, lat, lng)
-      : (mapWaiting = { canvas, lat, lng })
-  }
+    if (!isLoaded) {
+      waiting.push({
+        fn: showMap,
+        arguments,
+      })
+      return
+    }
 
-  const renderMap = (canvas, lat, lng) => {
     const mapOptions = {
       zoom: 18,
       disableDefaultUI: true,
