@@ -10,7 +10,7 @@ export default function (context, inject) {
     getHome,
     getReviewsByHomeId,
     getUserByHomeId,
-    GetHomesByLocation,
+    getHomesByLocation,
   })
 
   async function getHome(homeId) {
@@ -64,7 +64,7 @@ export default function (context, inject) {
     }
   }
 
-  async function GetHomesByLocation(Lat, Lng, radiusInMeters = 1500) {
+  async function getHomesByLocation(Lat, Lng, radiusInMeters = 1500) {
     try {
       return unWrap(
         await fetch(`https://${appId}-dsn.algolia.net/1/indexes/homes/query`, {
