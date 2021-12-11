@@ -46,8 +46,22 @@ export default {
 
     getHomeMarkers() {
       return this.homes.map((home) => {
-        return { ...home._geoloc }
+        return {
+          ...home._geoloc,
+          pricePerNight: home.pricePerNight,
+          id: home.objectID,
+        }
       })
+    },
+
+    highlightMarker(homeId, isHighlighted) {
+      /* 
+        uses es6 optional chaining operator to check if class exists
+        https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining
+      */
+      document
+        .getElementsByClassName(`home-${homeId}`)[0]
+        ?.classList?.toggle('marker-highlight', isHighlighted)
     },
   },
 }
@@ -66,7 +80,11 @@ export default {
           :key="home.objectID"
           :to="`/home/${home.objectID}`"
         >
-          <HomeCardSearchResult :home="home" />
+          <HomeCardSearchResult
+            :home="home"
+            @mouseover.native="highlightMarker(home.objectID, true)"
+            @mouseout.native="highlightMarker(home.objectID, false)"
+          />
         </NuxtLink>
       </div>
 
@@ -79,3 +97,19 @@ export default {
     <div ref="map" class="rounded-md h-[500px] mt-20"></div>
   </div>
 </template>
+
+<style lang="postcss">
+.marker {
+  @apply bg-white
+       border
+      border-gray-200
+       px-3
+      py-2
+      rounded-xl
+      font-bold;
+
+  &-highlight {
+    @apply bg-slate-800 border-black !text-white;
+  }
+}
+</style>

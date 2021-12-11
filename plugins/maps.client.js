@@ -57,21 +57,40 @@ export default function (context, inject) {
       disableDefaultUI: true,
       zoomcontrol: true,
       center: new window.google.maps.LatLng(lat, lng),
+      styles: [
+        {
+          featureType: 'poi.business',
+          elementType: 'labels.icon',
+          stylers: [{ visibility: 'off' }],
+        },
+      ],
     }
 
     const map = new window.google.maps.Map(canvas, mapOptions)
 
     if (!markers) {
       const position = new window.google.maps.LatLng(lat, lng)
-      const marker = new window.google.maps.Marker({ position })
+      const marker = new window.google.maps.Marker({
+        position,
+        clickable: !true,
+      })
       marker.setMap(map)
       return
     }
 
     const bounds = new window.google.maps.LatLngBounds()
+
     markers.forEach((home) => {
       const position = new window.google.maps.LatLng(home.lat, home.lng)
-      const marker = new window.google.maps.Marker({ position })
+      const marker = new window.google.maps.Marker({
+        position,
+        label: {
+          text: `$${home.pricePerNight}`,
+          className: `marker home-${home.id}`,
+        },
+        icon: 'https://maps.gstatic.com/mapfiles/transparent.png',
+        clickable: !true,
+      })
       marker.setMap(map)
       bounds.extend(position)
     })
