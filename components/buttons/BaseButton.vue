@@ -3,17 +3,28 @@ export default {}
 </script>
 
 <template>
-  <button type="button" class="button button_default">
+  <button type="button">
     <slot></slot>
   </button>
 </template>
 
 <style lang="postcss">
 .button {
-  @apply px-1 py-2 text-gray-600 rounded-md;
+  @apply rounded-md h-fit;
 
-  &_default {
+  &-default {
     background-color: var(--nuxtBnB-gray-300);
+    @apply text-gray-600 px-1 py-2;
+  }
+
+  &-booking {
+    background-color: var(--nuxtBnB-blue-primary);
+    @apply text-gray-100 px-1 py-4;
+  }
+
+  &-search {
+    background-color: var(--nuxtBnB-blue-primary);
+    @apply p-3;
   }
 }
 </style>
