@@ -1,4 +1,5 @@
 <script>
+import pluralize from '~/utils/pluralize.js'
 export default {
   props: {
     home: {
@@ -6,75 +7,76 @@ export default {
       required: true,
     },
   },
-  methods: {
-    // reuturn singular word or append 's' if plural
-
-    pluralize(number, singularWord) {
-      const text = `${number} ${singularWord}`
-
-      return number === 1 ? text : text + 's'
+  computed: {
+    features() {
+      return this.home.features.slice(0, 3).join(', ')
     },
+  },
+  methods: {
+    pluralize,
   },
 }
 </script>
 
 <template>
-  <div>
-    <h1 class="text-2xl text-indigo-600">
-      {{ home.title }}
-    </h1>
+  <section class="mt-8">
+    <div
+      class="lg:grid-cols-[1fr,60%] h-52 rounded-tr-md rounded-bl-md rounded-br-md bg-slate-100 grid w-full"
+    >
+      <img
+        :src="home.images[0]"
+        alt=""
+        class="rounded-tl-md rounded-bl-md object-cover object-[left_center] w-full h-full"
+      />
 
-    <div class="lg:grid-flow-col grid gap-8 mt-5 mb-12">
-      <div>
-        <img
-          :src="home.images[0]"
-          alt=""
-          class="sm:max-h-96 md:max-h-[500px] object-fill w-full rounded-md"
-        />
-      </div>
+      <div class="gap-y-1 grid p-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <h2 class="font-bold">{{ home.title }}</h2>
+          <img src="~/icons/heart.svg" alt="" />
+        </div>
 
-      <div class="bg-slate-200 px-4 py-2 space-y-4 rounded-md shadow-md">
-        <div class="flex justify-between">
-          <h2 class="text-xl">Location</h2>
+        <div class="flex items-center">
           <img
             src="/images/marker.svg"
             alt=""
             aria-hidden="true"
-            width="20"
-            height="20"
+            width="10"
+            height="10"
+            class="mr-2"
           />
+          <div class="text-blue-500 underline">
+            {{ home.location.state }}
+            {{ home.location.address }}
+            {{ home.location.city }}
+          </div>
         </div>
 
-        <ul class="space-y-4">
-          <li>
-            <span class="font-bold">Address:</span>
-            {{ home.location.address }}
-          </li>
+        <div
+          class="text-slate-400 divide-slate-300 h-fit flex mt-2 space-x-1 text-sm divide-x-2"
+        >
+          <div class="px-2">{{ pluralize(home.guests, 'guest') }}</div>
+          <div class="px-2">{{ pluralize(home.bedrooms, 'room') }}</div>
+          <div class="px-2">{{ pluralize(home.beds, 'bed') }}</div>
+          <div class="px-2">{{ pluralize(home.bathrooms, 'bath') }}</div>
+        </div>
 
-          <li>
-            <span class="font-bold">City:</span>
-            {{ home.location.city }}
-          </li>
+        <div class="text-slate-400 pl-2 text-sm">
+          {{ features }}
+        </div>
 
-          <li>
-            <span class="font-bold">Location:</span>
-            {{ home.location.state }}
-          </li>
-
-          <div class="flex flex-wrap gap-2">
-            <span class="font-bold">Home Details:</span>
-            <li>{{ pluralize(home.guests, 'guest') }},</li>
-            <li>{{ pluralize(home.bedrooms, 'room') }},</li>
-            <li>{{ pluralize(home.beds, 'bed') }},</li>
-            <li>{{ pluralize(home.bathrooms, 'bath') }}</li>
+        <div class="flex items-center justify-between">
+          <div class="flex gap-1">
+            <img src="~/icons/star.svg" alt="" />
+            <div>{{ home.reviewValue }}</div>
+            <div class="text-slate-700">({{ home.reviewCount }})</div>
           </div>
 
-          <li>
-            <span class="font-bold">Price:</span>
-            ${{ home.pricePerNight }} / night
-          </li>
-        </ul>
+          <div>
+            ${{ home.pricePerNight }}
+            <span class="text-slate-500">/ night</span>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
