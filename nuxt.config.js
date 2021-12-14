@@ -1,4 +1,11 @@
+import { resolve } from 'path'
+
 export default {
+  alias: {
+    images: resolve(__dirname, './assets/images/'),
+    icons: resolve(__dirname, './assets/images/icons/'),
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: 'mastering-nuxt: %s',
@@ -22,7 +29,7 @@ export default {
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
-    dirs: ['~/components', '~/components/buttons'],
+    dirs: ['~/components', '~/components/homes', '~/components/buttons'],
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -44,6 +51,9 @@ export default {
         tailwindcss: {},
         autoprefixer: {},
       },
+    },
+    loaders: {
+        imgUrl: { limit: 0 },
     },
   },
 
