@@ -45,6 +45,7 @@ export default {
     },
 
     getHomeMarkers() {
+      if (this.homes.length === 0) return null
       return this.homes.map((home) => {
         return {
           ...home._geoloc,
@@ -69,12 +70,12 @@ export default {
 
 <template>
   <div
-    class="md:grid-cols-[2fr,1fr] gutter grid gap-12 mt-[var(--gutter-default-top)] content-wrapper"
+    class="md:grid-cols-[55%,45%] gutter grid gap-6 mt-[var(--gutter-default-top)] content-wrapper content-wrapper-extend"
   >
     <div>
-      <h1>Results found for {{ label }}</h1>
+      <h1 class="heading heading-lg">Results found for {{ label }}</h1>
 
-      <div v-if="homes.length > 0" class="mt-16">
+      <div v-if="homes.length > 0">
         <NuxtLink
           v-for="home in homes"
           :key="home.objectID"
