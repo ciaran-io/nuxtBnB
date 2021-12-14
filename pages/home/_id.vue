@@ -36,103 +36,69 @@ export default {
     }
   },
 
-  mounted() {
-    // call google maps api from maps plugin
-    this.$maps.showMap(
-      this.$refs.map,
-      this.home._geoloc.lat,
-      this.home._geoloc.lng
-    )
-  },
-  methods: {
-    // format date received from api
-    formatDate(dateStr) {
-      const date = new Date(dateStr)
-      return date.toLocaleDateString(undefined, {
-        month: 'long',
-        year: 'numeric',
-      })
-    },
-  },
+  methods: {},
 }
 </script>
 
 <template>
   <div>
-    <div class="flex">
-      <!-- home images -->
-      <img
-        v-for="image in home.images"
-        :key="image"
-        :src="image"
-        alt="interior and exterior of home"
-        width="200"
-        height="150"
-      />
-    </div>
+    <!-- property images -->
+    <PropertyGallery :images="home.images" />
 
-    <!-- home information -->
-    <div class="mt-4">
-      <h2>{{ home.title }}</h2>
+    <!-- property information -->
+    <PropertyDetails :home="home" />
 
-      <ul class="mt-6">
-        <li>
-          <span>${{ home.pricePerNight }}</span>
-          / night
-        </li>
+    <!-- property description -->
+    <PropertyDescription :home="home" />
 
-        <div class="flex gap-2 mt-6">
-          <img
-            src="/images/marker.svg"
-            alt=""
-            aria-hidden="true"
-            width="20"
-            height="20"
-          />
-          <li>{{ home.location.address }}</li>
-          <li>{{ home.location.city }}</li>
-          <li>{{ home.location.state }}</li>
-          <li>{{ home.location.country }}</li>
-        </div>
+    <!-- Google maps + address -->
+    <PropertyMap :home="home" />
 
-        <div class="flex gap-2 mt-6">
-          <img
-            src="/images/star.svg"
-            alt=""
-            aria-hidden="true"
-            width="20"
-            height="20"
-          />
-          <li>{{ home.reviewValue }}</li>
-        </div>
+    <!-- property reviews -->
+    <PropertyReviews :reviews="reviews" />
 
-        <div class="flex gap-2 mt-6">
-          <li>{{ home.guests }} guests,</li>
-          <li>{{ home.bedrooms }} rooms,</li>
-          <li>{{ home.beds }} beds,</li>
-          <li>{{ home.bathrooms }} bathrooms,</li>
-        </div>
-      </ul>
-    </div>
-
-    <!-- google maps -->
-    <div ref="map" class="w-[300px] h-[300px]"></div>
-
-    <!-- home reviews -->
-    <div v-for="review in reviews" :key="review.objectID" class="">
-      <img :src="review.reviewer.image" alt="reviewer profile image" />
-      <p>{{ review.reviewer.name }}</p>
-      <p>{{ formatDate(review.date) }}</p>
-      <p><shorten-text :text="review.comment" :target="120" /></p>
-    </div>
-
-    <div>
-      <!-- user reviews -->
-      <img :src="user.image" alt="" />
-      <p>{{ user.name }}</p>
-      <p>{{ formatDate(user.joined) }}</p>
-      <p>{{ user.reviewCount }}</p>
-      <p>{{ user.description }}</p>
-    </div>
+    <!-- property host -->
+    <PropertyHost :user="user" />
   </div>
 </template>
+
+<style lang="postcss" scoped>
+/* div > section
+} */
+div > section {
+  @apply mx-auto;
+
+  &:nth-child(3n),
+  :nth-child(6n) {
+    @apply max-w-screen-xl;
+  }
+
+  &:not(:nth-child(3n)):not(:nth-child(6n)) {
+    @apply max-w-screen-lg;
+  }
+
+  &:nth-child(1) {
+    @apply mt-[var(--gutter-default-top)];
+  }
+
+  &:nth-child(2) {
+    @apply mt-20;
+  }
+
+  &:nth-child(3) {
+    @apply mt-20;
+  }
+
+  &:nth-child(4) {
+    @apply mt-24;
+  }
+
+  &:nth-child(5) {
+    @apply mt-24;
+  }
+
+  &:nth-child(6) {
+    @apply mt-24;
+  }
+}
+</style>
