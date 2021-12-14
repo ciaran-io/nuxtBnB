@@ -1,6 +1,5 @@
 <script>
 export default {
-  name: 'ShortenText',
   props: {
     text: {
       type: String,
@@ -46,7 +45,9 @@ export default {
 
 <template>
   <div>
-    <p>{{ displayText }}</p>
+    <p class="before:content-['\275D'] before:text-slate-500">
+      {{ displayText }}
+    </p>
     <BaseButton
       v-if="textIsLong && !isExpanded"
       @click.native="isExpanded = true"
@@ -63,4 +64,8 @@ export default {
   </div>
 </template>
 
-<style></style>
+<style lang="postcss" scoped>
+button {
+  @apply text-blue-500 text-right mt-3 underline decoration-dotted;
+}
+</style>
