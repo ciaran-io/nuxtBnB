@@ -6,26 +6,49 @@
 :root {
   /* colors */
   --nuxtBnB-gray-300: hsl(216, 12%, 84%);
+  --nuxtBnB-blue-primary: hsl(217, 91%, 60%);
 
   /* gutters */
   --gutter-default-sides: 1.25rem;
-  --gutter-default-top: 6rem;
+  --gutter-default-top: 3rem;
 
   /* cards */
 }
 
 @layer base {
+  .heading {
+    @apply text-slate-500;
+
+    &-lg {
+      @apply text-2xl;
+    }
+  }
+
   /* content-padding */
   .gutter {
     @apply px-[var(--gutter-default-sides)];
+
+    @screen xl {
+      @apply px-0;
+    }
   }
 
   /* content max widths */
   .content-wrapper {
     @apply mx-auto;
 
-    &-header {
-      @apply max-w-screen-lg;
+    @screen md {
+      &-header {
+        @apply max-w-screen-xl;
+      }
+
+      &-body {
+        @apply max-w-screen-lg;
+      }
+
+      &-extend {
+        @apply max-w-screen-xl;
+      }
     }
   }
 }
