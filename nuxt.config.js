@@ -6,6 +6,17 @@ export default {
     icons: resolve(__dirname, './assets/images/icons/'),
   },
 
+  publicRuntimeConfig: {
+    auth: {
+      cookieName: 'idToken',
+      clientId: '515343809034-q2tgor76qnhc8dkdcau7na1trvn2udum.apps.googleusercontent.com'
+    }
+  },
+
+  privateRuntimeConfig: {
+    
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: 'mastering-nuxt: %s',
@@ -25,7 +36,7 @@ export default {
   css: ['~/assets/css/tailwind.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/maps.client', '~/plugins/dataApi'],
+  plugins: ['~/plugins/maps.client', '~/plugins/dataApi', '~/plugins/auth.client'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
@@ -41,7 +52,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ['~/modules/auth'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
