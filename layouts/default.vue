@@ -1,8 +1,18 @@
 <script>
 export default {
+  computed: {
+    user() {
+      return this.$store.state.auth.user
+    },
+    isLoggedIn() {
+      return this.$store.state.auth.isLoggedIn
+    },
+  },
+
   mounted() {
     this.$maps.makeAutoComplete(this.$refs.citySearch)
   },
+
   methods: {
     changed(event) {
       const place = event.detail
@@ -31,13 +41,16 @@ export default {
       </NuxtLink>
 
       <div class="md:flex md:items-center hidden">
-        <img src="~/icons/house.svg" alt="" class="w-8 h-8 mr-2" />
-        <span class="mr-6"> Host </span>
-        <img
-          src="~/images/user.jpg"
-          alt=""
-          class="w-12 h-12 border-2 border-blue-500 rounded-full"
-        />
+        <template v-if="isLoggedIn">
+          <img
+            src="~/icons/house.svg"
+            alt=""
+            class="w-6 h-6 mr-2 text-blue-500"
+          />
+          <span class="mr-6 text-sm"> Host </span>
+          <img :src="user.profileUrl" alt="" class="avatar" />
+        </template>
+        <div v-show="!isLoggedIn" id="googleButton">Button</div>
       </div>
 
       <div class="md:flex md:space-x-4 md:place-self-center hidden">
