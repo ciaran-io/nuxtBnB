@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* root */
 :root {
   /* colors */
   --nuxtBnB-gray-300: hsl(216, 12%, 84%);
@@ -11,10 +12,9 @@
   /* gutters */
   --gutter-default-sides: 1.25rem;
   --gutter-default-top: 3rem;
-
-  /* cards */
 }
 
+/* base layer */
 @layer base {
   .heading {
     @apply text-slate-500;
@@ -50,5 +50,12 @@
         @apply max-w-screen-xl;
       }
     }
+  }
+}
+
+/* components */
+@layer components {
+  .avatar {
+    @apply object-cover w-8 h-8 border-2 border-blue-500 rounded-full;
   }
 }
