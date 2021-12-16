@@ -9,12 +9,20 @@ export default {
   publicRuntimeConfig: {
     auth: {
       cookieName: 'idToken',
-      clientId: '515343809034-q2tgor76qnhc8dkdcau7na1trvn2udum.apps.googleusercontent.com'
-    }
+      clientId:
+        '515343809034-q2tgor76qnhc8dkdcau7na1trvn2udum.apps.googleusercontent.com',
+    },
+    algolia: {
+      appId: '20TT3H3J0T',
+      key: 'a2ab745a479ac514dd5769f72997579d',
+    },
   },
 
   privateRuntimeConfig: {
-    
+    algolia: {
+      appId: '20TT3H3J0T',
+      key: '7a77605478934aca82ac224fdeccb922',
+    },
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -36,7 +44,11 @@ export default {
   css: ['~/assets/css/tailwind.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/maps.client', '~/plugins/dataApi', '~/plugins/auth.client'],
+  plugins: [
+    '~/plugins/maps.client',
+    '~/plugins/dataApi',
+    '~/plugins/auth.client',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
@@ -52,7 +64,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['~/modules/auth'],
+  modules: ['~/modules/auth', '~/modules/algolia'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -64,7 +76,7 @@ export default {
       },
     },
     loaders: {
-        imgUrl: { limit: 0 },
+      imgUrl: { limit: 0 },
     },
   },
 
