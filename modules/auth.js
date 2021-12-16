@@ -11,13 +11,10 @@ export default function (){
   async function handler (req, res, next) {
     const idToken = cookie.parse(req.headers.cookie)[authConfig.cookieName]
     if(!idToken) return rejectHit(res)
-
-    console.log(req.originalUrl);
-    console.log(idToken);
-
+    
     const ticket = await getUser(idToken)
     if(!ticket) return rejectHit(res)
-    console.log(ticket);
+
     req.identity = {
       id: ticket.sub,
       email: ticket.email,
@@ -30,7 +27,7 @@ export default function (){
   async function getUser(idToken){
     const client =  new OAuth2Client(authConfig.clientId)
     try {
-        const ticket = await client.verifyIdToken({
+        const ticket= await client.verifyIdToken({
           idToken,
           audience: authConfig.clientId,
         })
