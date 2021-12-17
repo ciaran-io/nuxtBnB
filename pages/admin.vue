@@ -11,13 +11,13 @@ asyncData({$config, redirect}){
 
 </script>
 
-export default {
-
-}
 
 <template>
   <div>
     admin
+    <div class="bg-slate-200">
+      <NuxtLink to="/admin/homes/">Homes</NuxtLink>
+    </div>
     <NuxtChild/>
   </div>
 </template>
