@@ -58,4 +58,29 @@
   .avatar {
     @apply object-cover w-8 h-8 border-2 border-blue-500 rounded-full;
   }
+
+  /* button styles */
+  button {
+    @apply h-fit rounded-md;
+
+    &.default {
+      background-color: var(--nuxtBnB-gray-300);
+      @apply px-1 py-2 text-gray-600;
+    }
+
+    &.booking {
+      background-color: var(--nuxtBnB-blue-primary);
+      @apply px-1 py-4 text-gray-100;
+    }
+
+    &.search {
+      background-color: var(--nuxtBnB-blue-primary);
+      @apply p-3;
+    }
+
+    &.submit {
+      background-color: var(--nuxtBnB-blue-primary);
+      @apply px-4 py-2 text-white;
+    }
+  }
 }
