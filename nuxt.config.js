@@ -16,6 +16,9 @@ export default {
       appId: '20TT3H3J0T',
       key: 'a2ab745a479ac514dd5769f72997579d',
     },
+    cloudinary: {
+      apiKey: '393381988898356'
+    }
   },
 
   privateRuntimeConfig: {
@@ -23,6 +26,13 @@ export default {
       appId: '20TT3H3J0T',
       key: '7a77605478934aca82ac224fdeccb922',
     },
+    cloudinary: { 
+      apiSecret: 'TZIayhw_McP_tKOkHRSvt6ZM1NI'
+    },
+  },
+
+  cloudinary: {
+    cloudName: 'pixlink',
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -64,7 +74,12 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['~/modules/auth', '~/modules/algolia'],
+  modules: [
+    '~/modules/auth',
+    '~/modules/algolia',
+    '~/modules/cloudinary',
+    '@nuxtjs/cloudinary'
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -83,4 +98,6 @@ export default {
   tailwindcss: {
     viewer: false,
   },
+
+ 
 }
