@@ -3,8 +3,8 @@ import { unWrap } from '~/utils/fetchUtils'
 
 export default {
   methods: {
-    async uploadFile(e) {
-      const file = e.target.files[0]
+    async uploadFile(event) {
+      const file = event.target.files[0]
       if (!file) return
       const filename = file.name.split('.').slice(0, -1).join('.') + Date.now()
       const options = {
@@ -35,6 +35,8 @@ export default {
         apiKey: this.$config.cloudinary.apiKey,
         signature,
       })
+
+      this.$emit('file-uploaded', asset.secure_url)
     },
   },
 }
