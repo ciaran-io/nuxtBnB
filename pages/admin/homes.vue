@@ -35,6 +35,14 @@ export default {
   },
 
   methods: {
+    async deleteHome(homeId) {
+      await fetch(`/api/homes/${homeId}`, {
+        method: 'DELETE',
+      })
+      const index = this.homeList.findIndex((obj) => obj.objectID === homeId)
+      this.homeList.splice(index, 1)
+    },
+
     async setHomesList() {
       this.homeList = (await unWrap(await fetch('/api/homes/user/'))).json
     },
@@ -71,12 +79,18 @@ export default {
     },
 
     async onSubmit() {
-      await fetch('/api/homes', {
-        method: 'POST',
-        body: JSON.stringify(this.home),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await unWrap(
+        await fetch('/api/homes', {
+          method: 'POST',
+          body: JSON.stringify(this.home),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+      )
+      this.homeList.push({
+        title: this.home.title,
+        objectID: response.json.homeId,
       })
     },
 
@@ -91,7 +105,7 @@ export default {
   <div>
     <div v-for="home in homeList" :key="home.objectID">
       {{ home.title }}
-      <baseButton class="delete"> Delete </baseButton>
+      <button class="delete" @click="deleteHome(home.objectID)">Delete</button>
     </div>
 
     <h2>Add a home</h2>
@@ -122,8 +136,8 @@ export default {
 
       <!-- <input type="text" ref="locationSelector" autocomplete="off"  placeholder="Select a location" @changed="changed"> -->
       <input
-        type="text"
         ref="locationSelector"
+        type="text"
         autocomplete="off"
         placeholder="Select a location"
         @changed="changed"
