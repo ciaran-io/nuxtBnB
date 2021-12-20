@@ -1,6 +1,9 @@
 <script>
+import { unWrap } from '~/utils/fetchUtils'
+
 export default {
   data: () => ({
+    homeList: [],
     home: {
       title: '',
       description: '',
@@ -28,9 +31,14 @@ export default {
 
   mounted() {
     this.$maps.makeAutoComplete(this.$refs.locationSelector, ['address'])
+    this.setHomesList()
   },
 
   methods: {
+    async setHomesList() {
+      this.homeList = (await unWrap(await fetch('/api/homes/user/'))).json
+    },
+
     changed(event) {
       const addressParts = event.detail.address_components
       const route = this.getAddressPart(addressParts, 'route')?.short_name || ''
@@ -81,7 +89,11 @@ export default {
 
 <template>
   <div>
-    <div>[list of homes]</div>
+    <div v-for="home in homeList" :key="home.objectID">
+      {{ home.title }}
+      <baseButton class="delete"> Delete </baseButton>
+    </div>
+
     <h2>Add a home</h2>
     <form @submit.prevent="onSubmit">
       <ImageUploader @file-uploaded="imageUpdated($event, 0)" />
