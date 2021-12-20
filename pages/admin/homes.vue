@@ -18,7 +18,7 @@ export default {
         postalCode: '',
         country: '',
       },
-      __geoloc: {
+      _geoloc: {
         lat: '',
         lng: '',
       },
@@ -33,24 +33,29 @@ export default {
   methods: {
     changed(event) {
       const addressParts = event.detail.address_components
-      const street =
-        this.getAddressPart(addressParts, 'street_number')?.short_name || ''
       const route = this.getAddressPart(addressParts, 'route')?.short_name || ''
 
+      const street =
+        this.getAddressPart(addressParts, 'street_number')?.short_name || ''
+
       this.home.location.address = street + ' ' + route
+
       this.home.location.city =
         this.getAddressPart(addressParts, 'locality')?.short_name || ''
+
       this.home.location.state =
         this.getAddressPart(addressParts, 'administrative_area_level_1')
           ?.long_name || ''
+
       this.home.location.country =
         this.getAddressPart(addressParts, 'country')?.short_name || ''
+
       this.home.location.postalCode =
         this.getAddressPart(addressParts, 'postal_code')?.short_name || ''
 
       const geo = event.detail.geometry.location
-      this.home.__geoloc.lat = geo.lat()
-      this.home.__geoloc.lng = geo.lng()
+      this.home._geoloc.lat = geo.lat()
+      this.home._geoloc.lng = geo.lng()
     },
 
     getAddressPart(parts, type) {
@@ -77,11 +82,9 @@ export default {
 <template>
   <div>
     <div>[list of homes]</div>
-    <ImageUploader @file-uploaded="imageUpdated($event, 0)" />
     <h2>Add a home</h2>
     <form @submit.prevent="onSubmit">
-      images:<br />
-      <input v-model="home.images[0]" type="text" />
+      <ImageUploader @file-uploaded="imageUpdated($event, 0)" />
 
       Tiltle<br />
       <input v-model="home.title" type="text" />
