@@ -65,7 +65,7 @@ import {unWrap, getErrorResponse} from '~/utils/fetchUtils'
       }
     }
   
-    async function getHomesByLocation(Lat, Lng, radiusInMeters = 1500) {
+    async function getHomesByLocation(Lat, Lng, radiusInMeters = 1500 * 15) {
       try {
         return unWrap(
           await fetch(`https://${$config.algolia.appId}-dsn.algolia.net/1/indexes/homes/query`, {
