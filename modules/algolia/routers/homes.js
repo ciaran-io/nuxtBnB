@@ -12,6 +12,7 @@ export default (apis) => {
     }
     rejectHitBadRequest(res)
   }
+  
   async function createHome(identity,body,res){
     const homeId = uuidv4()
     const payload = {
@@ -26,6 +27,7 @@ export default (apis) => {
       res.send()
       return
     }
+    await apis.user.assignHome(identity, homeId)
     sendJSON({}, res)
   }
 }
