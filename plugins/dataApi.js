@@ -12,6 +12,7 @@ import {unWrap, getErrorResponse} from '~/utils/fetchUtils'
       getReviewsByHomeId,
       getUserByHomeId,
       getHomesByLocation,
+      getHomes,
     })
   
     async function getHome(homeId) {
@@ -75,6 +76,23 @@ import {unWrap, getErrorResponse} from '~/utils/fetchUtils'
               aroundRadius: radiusInMeters,
               aroundLatLng: `${Lat}, ${Lng}`,
               hitsPerPage: 10,
+              attributesToHighlight: [],
+            }),
+          })
+        )
+      } catch (error) {
+        return getErrorResponse(error)
+      }
+    }
+
+    async function getHomes() {
+      try {
+        return unWrap(
+          await fetch(`https://${$config.algolia.appId}-dsn.algolia.net/1/indexes/homes/query`, {
+            headers,
+            method: 'POST',
+            body: JSON.stringify({
+              hitsPerPage: 3,
               attributesToHighlight: [],
             }),
           })

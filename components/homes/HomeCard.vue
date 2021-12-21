@@ -11,11 +11,12 @@ export default {
 
 <template>
   <div>
-    <img
-      :src="home.images"
-      style="object-fit: fill"
+    <nuxt-img
+      provider="cloudinary"
+      :src="home.images[0]"
+      class="object-contain"
       width="200"
-      height="200"
+      height="150"
       alt=""
     />
     <h2>{{ home.title }}</h2>
