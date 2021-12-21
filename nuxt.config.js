@@ -31,9 +31,6 @@ export default {
     },
   },
 
-  cloudinary: {
-    cloudName: 'pixlink',
-  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -62,7 +59,12 @@ export default {
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: {
-    dirs: ['~/components', '~/components/homes', '~/components/buttons'],
+    dirs: [
+      '~/components',
+      '~/components/homes',
+      '~/components/buttons',
+      '~/components/property-info'
+    ],
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -78,8 +80,20 @@ export default {
     '~/modules/auth',
     '~/modules/algolia',
     '~/modules/cloudinary',
-    '@nuxtjs/cloudinary'
+    '@nuxtjs/cloudinary',
+    '@nuxt/image',
   ],
+
+  cloudinary: {
+    cloudName: 'pixlink',
+  },
+
+  image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/pixlink/image/upload/'
+    }
+  },
+
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

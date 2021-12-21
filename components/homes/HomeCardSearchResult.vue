@@ -23,8 +23,11 @@ export default {
     <div
       class="lg:grid-cols-[1fr,60%] h-52 rounded-tr-md rounded-bl-md rounded-br-md bg-slate-100 grid w-full"
     >
-      <img
+      <nuxt-img
+        provider="cloudinary"
         :src="home.images[0]"
+        width="300"
+        height="169"
         alt=""
         class="rounded-tl-md rounded-bl-md object-cover object-[left_center] w-full h-full"
       />
