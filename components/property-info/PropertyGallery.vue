@@ -6,15 +6,28 @@ export default {
       required: true,
     },
   },
+  methods: {
+    getImageUrl(publicId) {
+      return this.$img(
+        publicId,
+        {
+          width: 600,
+        },
+        {
+          provider: 'cloudinary',
+        }
+      )
+    },
+  },
 }
 </script>
 
 <template>
   <section>
     <div
-      v-for="image in images"
-      :key="image"
-      :style="`background-image: url(${image})`"
+      v-for="publicId in images"
+      :key="publicId"
+      :style="`background-image: url(${getImageUrl(publicId)})`"
     ></div>
   </section>
 </template>
