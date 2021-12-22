@@ -26,6 +26,10 @@ export default {
         lng: '',
       },
       images: [],
+      availabilityRanges: [
+        { start: '', end: '' },
+        { start: '', end: '' },
+      ],
     },
   }),
 
@@ -147,6 +151,21 @@ export default {
       <input v-model="home.location.state" type="text" /> Postal Code:
       <input v-model="home.location.postalCode" type="text" /> Counrty:
       <input v-model="home.location.country" type="text" />
+
+      <date-picker
+        v-for="(range, index) in home.availabilityRanges"
+        :key="index"
+        v-model="home.availabilityRanges[index]"
+        is-range
+        timezone="UTC"
+        :modelConfig="{ timeAdjust: '00.00.00' }"
+      >
+        <template v-slot="{ inputValue, inputEvents }">
+          <input :value="inputValue.start" v-on="inputEvents.start" />
+          to
+          <input :value="inputValue.end" v-on="inputEvents.end" />
+        </template>
+      </date-picker>
 
       <SubmitButton>Add</SubmitButton>
     </form>

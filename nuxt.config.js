@@ -55,6 +55,7 @@ export default {
     '~/plugins/maps.client',
     '~/plugins/dataApi',
     '~/plugins/auth.client',
+    '~/plugins/vCalendar.client',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
