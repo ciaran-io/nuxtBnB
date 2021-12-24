@@ -1,5 +1,17 @@
 <script>
 export default {
+  data: () => ({
+    range: {
+      start: new Date(),
+      end: new Date(),
+    },
+    location: {
+      lat: 0,
+      lng: 0,
+      label: '',
+    },
+  }),
+
   computed: {
     user() {
       return this.$store.state.auth.user
@@ -17,13 +29,18 @@ export default {
     changed(event) {
       const place = event.detail
       if (!place.geometry) return
-
+      this.location.lat = place.geometry.location.lat()
+      this.location.lng = place.geometry.location.lng()
+      this.location.label = this.$refs.citySearch.value
+    },
+    search() {
+      if (!this.location.label) return
       this.$router.push({
         name: 'search',
         query: {
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
-          label: this.$refs.citySearch.value,
+          ...this.location,
+          start: this.range.start.getTime() / 1000,
+          end: this.range.end.getTime() / 1000,
         },
       })
     },
@@ -34,37 +51,69 @@ export default {
 <template>
   <div>
     <header
-      class="gutter content-wrapper content-wrapper-header md:grid-rows-2 mt:mt-6 md:grid-cols-[1fr,auto] grid mt-3 grid-cols-[1fr,auto] items-end md:gap-y-6"
+      class="gutter content-wrapper content-wrapper-header md:grid-rows-[1fr,auto] mt:mt-6 grid mt-3 grid-cols-[1fr,auto] items-end md:gap-y-8"
     >
-      <NuxtLink to="/" class="w-max place-self-center">
+      <NuxtLink to="/" class="w-max place-self-center md:row-start-1">
         <img src="~/images/logo.svg" alt="" class="w-auto h-10" />
       </NuxtLink>
 
-      <div class="md:flex md:items-center hidden">
+      <div
+        class="md:flex md:items-center md:row-start-1 md:place-self-end md:gap-x-2 hidden"
+      >
         <template v-if="isLoggedIn">
-          <img
-            src="~/icons/house.svg"
-            alt=""
-            class="w-6 h-6 mr-2 text-blue-500"
-          />
-          <span class="mr-6 text-sm"> Host </span>
+          <img src="~/icons/house.svg" alt="" class="w-6 h-6 text-blue-500" />
+          <span class="text-sm"> Host </span>
           <img :src="user.profileUrl" alt="" class="avatar" />
         </template>
         <div v-show="!isLoggedIn" id="googleButton">Button</div>
       </div>
 
-      <div class="md:flex md:space-x-4 md:place-self-center hidden">
+      <div
+        class="hidden md:grid md:grid-cols-[max-content,auto] md:gap-x-2 md:max-w-max md:place-self-center"
+      >
         <input
           ref="citySearch"
           type="text"
           placeholder="Enter your address"
           @changed="changed"
         />
-        <input type="text" placeholder="Check in" class="datepicker" />
-        <input type="text" placeholder="Check out" class="datepicker" />
-        <BaseButton class="button button-search shadow-md">
-          <img src="~/icons/search.svg" alt="" class="w-16 h-full" />
-        </BaseButton>
+        <client-only>
+          <template #placeholder>
+            <div class="md:flex">
+              <input class="datepicker" />
+              <span class="md:place-self-center md:mx-3">to</span>
+              <input class="datepicker" />
+            </div>
+          </template>
+
+          <date-picker
+            v-model="range"
+            is-range
+            timezone="UTC"
+            :model-config="{ timeAdjust: '00.00.00' }"
+            class="md:flex"
+          >
+            <template v-slot="{ inputValue, inputEvents }">
+              <input
+                :value="inputValue.start"
+                v-on="inputEvents.start"
+                class="datepicker"
+              />
+
+              <span class="md:place-self-center md:mx-3">to</span>
+
+              <input
+                :value="inputValue.end"
+                v-on="inputEvents.end"
+                class="datepicker"
+              />
+
+              <button class="search ml-2" @click="search">
+                <img src="~/icons/search.svg" alt="" class="w-4 h-full" />
+              </button>
+            </template>
+          </date-picker>
+        </client-only>
       </div>
     </header>
     <nuxt class="gutter" />
