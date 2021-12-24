@@ -158,7 +158,7 @@ export default {
         v-model="home.availabilityRanges[index]"
         is-range
         timezone="UTC"
-        :modelConfig="{ timeAdjust: '00.00.00' }"
+        :model-config="{ timeAdjust: '00.00.00' }"
       >
         <template v-slot="{ inputValue, inputEvents }">
           <input :value="inputValue.start" v-on="inputEvents.start" />
