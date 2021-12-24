@@ -16,5 +16,18 @@ module.exports = {
   plugins: [
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+
+  },
+
+   // ignores rule for muti word component in layput folder
+   overrides: [
+    {
+      files: ['./layouts/*.vue'],
+      rules: {
+        'vue/multi-word-component-names': 0,
+      },
+    },
+  ],
+
 }
