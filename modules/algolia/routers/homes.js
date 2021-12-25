@@ -1,4 +1,4 @@
-import { rejectHitBadRequest, hasBadBody, sendJSON } from '../helpers.js'
+import { rejectHitBadRequest, hasBadBody, sendJSON } from '../../helpers.js'
 import { v4 as uuidv4 } from 'uuid'
 
 export default (apis) => {
