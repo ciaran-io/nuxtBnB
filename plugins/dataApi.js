@@ -66,16 +66,21 @@ import {unWrap, getErrorResponse} from '~/utils/fetchUtils'
       }
     }
   
-    async function getHomesByLocation(Lat, Lng, radiusInMeters = 1500 * 15) {
+    async function getHomesByLocation(lat, lng, start, end, radiusInMeters = 1500 * 15) {
       try {
+        const days = []
+        for(let day = parseInt(start);day <= parseInt(end); day += 86400){
+            days.push(`availability:${day}`)
+        }
         return unWrap(
           await fetch(`https://${$config.algolia.appId}-dsn.algolia.net/1/indexes/homes/query`, {
             headers,
             method: 'POST',
             body: JSON.stringify({
               aroundRadius: radiusInMeters,
-              aroundLatLng: `${Lat}, ${Lng}`,
+              aroundLatLng: `${lat},${lng}`,
               hitsPerPage: 10,
+              filters: days.join(' AND '),
               attributesToHighlight: [],
             }),
           })
