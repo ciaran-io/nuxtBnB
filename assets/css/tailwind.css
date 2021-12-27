@@ -31,6 +31,10 @@
     @screen xl {
       @apply px-0;
     }
+
+    &-top {
+      @apply mt-[var(--gutter-default-top)];
+    }
   }
 
   /* content max widths */
@@ -39,15 +43,21 @@
 
     @screen md {
       &-header {
-        @apply max-w-screen-xl;
+        @apply max-w-screen-md;
       }
 
-      &-body {
-        @apply max-w-screen-lg;
-      }
+      @screen lg {
+        &-header {
+          @apply max-w-screen-xl;
+        }
 
-      &-extend {
-        @apply max-w-screen-xl;
+        &-body {
+          @apply max-w-screen-lg;
+        }
+
+        &-extend {
+          @apply max-w-screen-xl;
+        }
       }
     }
   }
@@ -61,7 +71,7 @@
 
   /* button styles */
   button {
-    @apply h-fit rounded-md;
+    @apply h-fit w-fit rounded-md;
 
     &.default {
       background-color: var(--nuxtBnB-gray-300);
@@ -80,7 +90,7 @@
 
     &.submit {
       background-color: var(--nuxtBnB-blue-primary);
-      @apply px-4 py-2 text-white;
+      @apply p-2 text-white;
     }
   }
 }
