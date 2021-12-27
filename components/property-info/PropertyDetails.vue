@@ -1,16 +1,29 @@
 <script>
 import pluralize from '~/utils/pluralize.js'
 export default {
-  name: 'PropertyDetials',
   props: {
     home: {
       type: Object,
       required: true,
     },
   },
+  mounted() {
+    if (this.$route.query.result == 'success') alert('success!')
+  },
   methods: {
     pluralize,
+    checkout() {
+      const start = this.range.start.getTime() / 1000
+      const end = this.range.end.getTime() / 1000
+      this.$stripe.checkout(this.home.objectID, start, end)
+    },
   },
+  data: () => ({
+    range: {
+      start: null,
+      end: null,
+    },
+  }),
 }
 </script>
 
@@ -72,13 +85,34 @@ export default {
         ${{ home.pricePerNight }}
         <span class="text-slate-500 text-lg"> / night</span>
       </div>
-      <div class="grid grid-cols-2 gap-2">
-        <input type="text" placeholder="Check in" class="datepicker" />
-        <input type="text" placeholder="Check out" class="datepicker" />
-      </div>
-      <BaseButton class="button button-booking shadow-xl"
-        >Request to book!</BaseButton
-      >
+
+      <client-only>
+        <date-picker
+          v-model="range"
+          is-range
+          timezone="UTC"
+          :model-config="{ timeAdjust: '00.00.00' }"
+          class="md:flex"
+        >
+          <template v-slot="{ inputValue, inputEvents }">
+            <input
+              :value="inputValue.start"
+              v-on="inputEvents.start"
+              class="datepicker"
+            />
+
+            <input
+              :value="inputValue.end"
+              v-on="inputEvents.end"
+              class="datepicker"
+            />
+
+            <button class="submit ml-2" @click="checkout">
+              <img src="~/icons/search.svg" alt="" class="w-4 h-full" />
+            </button>
+          </template>
+        </date-picker>
+      </client-only>
     </div>
   </section>
 </template>

@@ -62,6 +62,7 @@ export default {
     '~/plugins/dataApi',
     '~/plugins/auth.client',
     '~/plugins/vCalendar.client',
+    '~/plugins/stripe.client',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -87,8 +88,10 @@ export default {
     '~/modules/auth',
     '~/modules/algolia',
     '~/modules/cloudinary',
+    '~/modules/stripe',
     '@nuxtjs/cloudinary',
     '@nuxt/image',
+
   ],
 
   cloudinary: {
