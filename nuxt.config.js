@@ -18,6 +18,9 @@ export default {
     },
     cloudinary: {
       apiKey: '393381988898356'
+    },
+    stripe: {
+      key: 'pk_test_51Iqg7UH6g6fmvO7HCa9e9SsT7Xy0AQkuTVRLZ76QFD6lLH8Q6Sboz8Er8mukm5rZgGeqTCGTcTpwYv8WhDcboCqf00zJFwG2ee'
     }
   },
 
@@ -29,6 +32,9 @@ export default {
     cloudinary: { 
       apiSecret: 'TZIayhw_McP_tKOkHRSvt6ZM1NI'
     },
+    stripe: {
+      secretKey : process.env.STRIPE_SECRET_KEY
+    }
   },
 
 
