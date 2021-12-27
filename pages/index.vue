@@ -20,7 +20,7 @@ export default {
 </script>
 
 <template>
-  <div class="grid grid-flow-col gap-1">
+  <div class="gutter-top grid grid-flow-col gap-1">
     <NuxtLink
       v-for="home in homes"
       :key="home.objectID"
