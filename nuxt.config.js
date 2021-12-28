@@ -1,6 +1,11 @@
 import { resolve } from 'path'
 
 export default {
+  rootUrl:
+    process.env.NODE_ENV === 'production'
+      ? 'https://nuxt-bn-b-nu.vercel.app'
+      : 'http://localhost:3000',
+
   alias: {
     images: resolve(__dirname, './assets/images/'),
     icons: resolve(__dirname, './assets/images/icons/'),
@@ -17,11 +22,11 @@ export default {
       key: 'a2ab745a479ac514dd5769f72997579d',
     },
     cloudinary: {
-      apiKey: '393381988898356'
+      apiKey: '393381988898356',
     },
     stripe: {
-      key: 'pk_test_51Iqg7UH6g6fmvO7HCa9e9SsT7Xy0AQkuTVRLZ76QFD6lLH8Q6Sboz8Er8mukm5rZgGeqTCGTcTpwYv8WhDcboCqf00zJFwG2ee'
-    }
+      key: 'pk_test_51Iqg7UH6g6fmvO7HCa9e9SsT7Xy0AQkuTVRLZ76QFD6lLH8Q6Sboz8Er8mukm5rZgGeqTCGTcTpwYv8WhDcboCqf00zJFwG2ee',
+    },
   },
 
   privateRuntimeConfig: {
@@ -29,14 +34,13 @@ export default {
       appId: '20TT3H3J0T',
       key: '7a77605478934aca82ac224fdeccb922',
     },
-    cloudinary: { 
-      apiSecret: 'TZIayhw_McP_tKOkHRSvt6ZM1NI'
+    cloudinary: {
+      apiSecret: 'TZIayhw_McP_tKOkHRSvt6ZM1NI',
     },
     stripe: {
-      secretKey : process.env.STRIPE_SECRET_KEY
-    }
+      secretKey: process.env.STRIPE_SECRET_KEY,
+    },
   },
-
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -71,7 +75,7 @@ export default {
       '~/components',
       '~/components/homes',
       '~/components/buttons',
-      '~/components/property-info'
+      '~/components/property-info',
     ],
   },
 
@@ -91,7 +95,6 @@ export default {
     '~/modules/stripe',
     '@nuxtjs/cloudinary',
     '@nuxt/image',
-
   ],
 
   cloudinary: {
@@ -100,10 +103,9 @@ export default {
 
   image: {
     cloudinary: {
-      baseURL: 'https://res.cloudinary.com/pixlink/image/upload/'
-    }
+      baseURL: 'https://res.cloudinary.com/pixlink/image/upload/',
+    },
   },
-
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -122,6 +124,4 @@ export default {
   tailwindcss: {
     viewer: false,
   },
-
- 
 }
