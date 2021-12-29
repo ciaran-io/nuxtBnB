@@ -10,8 +10,7 @@ export default function (context, inject) {
 
   function addScript() {
     const script = document.createElement('script')
-    script.src =
-      'https:maps.googleapis.com/maps/api/js?key=AIzaSyCFIDdK19LZC_2PsiWOpEtgWdxx4Lhawoo&libraries=places&callback=initGoogleMaps'
+    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCFIDdK19LZC_2PsiWOpEtgWdxx4Lhawoo&libraries=places&callback=initGoogleMaps'
     script.async = true
     window.initGoogleMaps = initGoogleMaps
     document.head.appendChild(script)
@@ -33,7 +32,9 @@ export default function (context, inject) {
       return
     }
 
-    const autoComplete = new window.google.maps.places.Autocomplete(input, { types })
+    const autoComplete = new window.google.maps.places.Autocomplete(input, {
+      types,
+    })
 
     autoComplete.addListener('place_changed', () => {
       const place = autoComplete.getPlace()
