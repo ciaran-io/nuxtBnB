@@ -1,10 +1,6 @@
 import { resolve } from 'path'
 
 export default {
-  rootUrl:
-    process.env.NODE_ENV === 'production'
-      ? 'https://nuxt-bn-b-nu.vercel.app'
-      : 'http://localhost:3000',
 
   alias: {
     images: resolve(__dirname, './assets/images/'),
@@ -12,18 +8,26 @@ export default {
   },
 
   publicRuntimeConfig: {
+    rootUrl:
+    process.env.NODE_ENV === 'production'
+      ? 'https://nuxt-bn-b-nu.vercel.app'
+      : 'http://localhost:3000',
+
     auth: {
       cookieName: 'idToken',
       clientId:
         '515343809034-q2tgor76qnhc8dkdcau7na1trvn2udum.apps.googleusercontent.com',
     },
+
     algolia: {
       appId: '20TT3H3J0T',
       key: 'a2ab745a479ac514dd5769f72997579d',
     },
+
     cloudinary: {
       apiKey: '393381988898356',
     },
+
     stripe: {
       key: 'pk_test_51Iqg7UH6g6fmvO7HCa9e9SsT7Xy0AQkuTVRLZ76QFD6lLH8Q6Sboz8Er8mukm5rZgGeqTCGTcTpwYv8WhDcboCqf00zJFwG2ee',
     },
@@ -34,9 +38,11 @@ export default {
       appId: '20TT3H3J0T',
       key: '7a77605478934aca82ac224fdeccb922',
     },
+
     cloudinary: {
       apiSecret: 'TZIayhw_McP_tKOkHRSvt6ZM1NI',
     },
+    
     stripe: {
       secretKey: process.env.STRIPE_SECRET_KEY,
     },
@@ -62,9 +68,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/maps.client',
     '~/plugins/dataApi',
     '~/plugins/auth.client',
+    '~/plugins/maps.client',
     '~/plugins/vCalendar.client',
     '~/plugins/stripe.client',
   ],

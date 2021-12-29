@@ -1,6 +1,5 @@
 <script>
 export default {
-  name: 'DynamicHomePage',
   // call algolia api useing dataApi plugin
   async asyncData({ params, $dataApi, error }) {
     const responses = await Promise.all([
@@ -27,6 +26,30 @@ export default {
     return {
       title: this.home.title,
       meta: [
+        // social media meta data for sharing
+        { hid: 'og-type', property: 'og:type', content: 'website' },
+        { hid: 'og-title', property: 'og:title', content: this.home.title },
+        {
+          hid: 'og-desc',
+          property: 'og:description',
+          content: this.home.description,
+        },
+        {
+          hid: 'og-image',
+          property: 'og:image',
+          content: this.$img(
+            this.home.images[0],
+            { width: 1200 },
+            { provider: 'cloudinary' }
+          ),
+        },
+        {
+          hid: 'og-url',
+          property: 'og:url',
+          content: `${this.$config.rootUrl}/home/${this.home.objectID}`,
+        },
+        { hid: 't-type', name: 'twitter:card', content: 'summary_large_image' },
+
         {
           name: 'description',
           content: `This is a new home ${this.home.title}`,
@@ -35,8 +58,6 @@ export default {
       ],
     }
   },
-
-  methods: {},
 }
 </script>
 
